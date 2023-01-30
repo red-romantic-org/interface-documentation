@@ -2,7 +2,7 @@ name: deploy-website
 
 on:
   push:
-    branches: [stq]
+    branches: [ stq ]
     
 jobs:
   build:
