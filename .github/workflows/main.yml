@@ -2,7 +2,7 @@ name: deploy-website
 
 on:
   push:
-    branches: [ stq ]
+    branches: [ main ]
     
 jobs:
   build:
@@ -21,8 +21,8 @@ jobs:
         uses: appleboy/scp-action@v0.0.1
         with:
           host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USERNAME }}
+          username: ${{ secrets.REMOTE_USER }}
           password: ${{ secrets.REMOTE_PASSWD }}
           port: ${{ secrets.REMOTE_PORT }}
-          source: "dist"
-          target: "interface"
+          source: "dist/"
+          target: "interface/"
