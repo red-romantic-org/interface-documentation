@@ -1,0 +1,28 @@
+name: deploy-website
+
+on:
+  push:
+    branches: [ main ]
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: install nodejs
+        uses: actions/setup-node@v3.6.0
+        with: 
+          node-version: "14.x"
+      - name: install deps
+        run: npm install
+      - name: build app
+        run: npm run build
+      - name: copt dist file with scp 
+        uses: appleboy/scp-action@v0.0.1
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          password: ${{ secrets.REMOTE_PASSWD }}
+          port: ${{ secrets.REMOTE_PORT }}
+          source: "dist/"
+          target: "interface/"
