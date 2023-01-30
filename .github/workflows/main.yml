@@ -12,17 +12,18 @@ jobs:
       - name: install nodejs
         uses: actions/setup-node@v3.6.0
         with: 
-          node-version: "14.x"
+          node-version: "16.x"
       - name: install deps
         run: npm install
       - name: build app
         run: npm run build
       - name: copt dist file with scp 
-        uses: appleboy/scp-action@v0.0.1
+        uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
-          password: ${{ secrets.REMOTE_PASSWD }}
           port: ${{ secrets.REMOTE_PORT }}
+          key: ${{ secrets.PRIVATE_KEY }}
           source: "dist/"
-          target: "interface/"
+          target: "interface"
+          
