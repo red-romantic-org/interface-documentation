@@ -1,23 +1,25 @@
 <template>
-  <a-form-model
-    ref="ruleForm"
-    :model="ruleForm"
-    :rules="rules"
-    v-bind="layout"
-    style="margin-top: 18%; width: 70%; margin-left: 20%"
-  >
-    <a-form-model-item has-feedback label="Crack" prop="pass">
-      <a-input v-model="ruleForm.pass" type="password" autocomplete="off" />
-    </a-form-model-item>
-    <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
-      <a-button type="primary" @click="submitForm('ruleForm')">
-        Submit
-      </a-button>
-      <a-button style="margin-left: 10px" @click="resetForm('ruleForm')">
-        Reset
-      </a-button>
-    </a-form-model-item>
-  </a-form-model>
+  <div class="container" style="padding-top: 18%">
+    <a-form-model
+      ref="ruleForm"
+      :model="ruleForm"
+      :rules="rules"
+      v-bind="layout"
+      style="width: 70%; margin-left: 20%"
+    >
+      <a-form-model-item has-feedback label="Crack" prop="pass">
+        <a-input v-model="ruleForm.pass" type="password" autocomplete="off" />
+      </a-form-model-item>
+      <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
+        <a-button type="primary" @click="submitForm('ruleForm')">
+          Submit
+        </a-button>
+        <a-button style="margin-left: 10px" @click="resetForm('ruleForm')">
+          Reset
+        </a-button>
+      </a-form-model-item>
+    </a-form-model>
+  </div>
 </template>
 <script>
 export default {
