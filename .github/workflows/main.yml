@@ -34,4 +34,4 @@ jobs:
           port: ${{ secrets.REMOTE_PORT }}
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
-            echo ${{secrets.REMOTE_PASSWD}} | sudo nginx -s reload
+            echo ${{secrets.REMOTE_PASSWD}} | sudo -S nginx -s reload
