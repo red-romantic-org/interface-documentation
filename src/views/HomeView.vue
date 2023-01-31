@@ -1,6 +1,20 @@
 <template>
   <div>
-    <div class="container row" id="con"></div>
+    <div class="container row" id="con">
+      <a-card
+        hoverable
+        style="width: 300px"
+        v-for="user in content.data"
+        v-bind:key="user.id"
+        class="card"
+        id="card"
+        @click="changeView()"
+      >
+        <img slot="cover" alt="example" v-bind:src="getImage(content.imgs)" />
+        <a-card-meta :title="user.title" :description="user.description">
+        </a-card-meta>
+      </a-card>
+    </div>
     <div class="pag">
       <a-pagination v-model="current" :total="50" show-less-items />
     </div>
@@ -8,15 +22,6 @@
 </template>
 
 <script>
-import $ from "jquery";
-$(function () {
-  for (let i = 0; i < 8; i++) {
-    $(
-      "<div class='card ant-card ant-card-bordered ant-card-hoverable' id='card' style='width: 300px'><div class='ant-card-cover'><img alt='example' src='https://stq555.com/img/202203261815442.jpg'/></div><div class='ant-card-body'><div class='ant-card-meta' style='text-align: center'><div class='ant-card-meta-detail'><div class='ant-card-meta-title' id='ant-card-meta-title'>Card title</div><div class='ant-card-meta-description'>This is the description</div></div></div></div></div>"
-    ).appendTo($("#con"));
-  }
-});
-
 export default {
   data() {
     return {
@@ -28,27 +33,61 @@ export default {
             id: 1,
             title: 1,
             description: 1,
+            page: 1,
           },
           {
             id: 2,
             title: 2,
             description: 2,
+            page: 1,
           },
           {
             id: 3,
             title: 3,
             description: 3,
+            page: 1,
           },
           {
             id: 4,
             title: 4,
             description: 4,
+            page: 1,
           },
+          {
+            id: 5,
+            title: 5,
+            description: 5,
+            page: 1,
+          },
+          {
+            id: 6,
+            title: 6,
+            description: 6,
+            page: 1,
+          },
+        ],
+        imgs: [
+          "https://stq555.com/img/202203261814360.jpg",
+          "https://stq555.com/img/202202111929321.jpg",
+          "https://stq555.com/img/wallhaven-9mzjwk1.jpg",
+          "https://stq555.com/img/202202111935251.png",
+          "https://stq555.com/img/202203261815441.jpg",
         ],
       },
     };
   },
-  methods: {},
+  methods: {
+    getImage(imagePath) {
+      imagePath =
+        this.content.imgs[Math.floor(Math.random() * this.content.imgs.length)];
+      return imagePath;
+    },
+    changeView() {
+      setTimeout(() => {
+        this.$router.push("/detail");
+      }, 700);
+    },
+  },
 };
 </script>
 
@@ -69,9 +108,8 @@ body::-webkit-scrollbar {
 }
 
 .container .card {
-  width: 270px;
-  margin: 2% 2.5%;
-  flex: 0 0 18%;
+  margin: 1.6% 2.5%;
+  text-align: center;
   box-shadow: rgb(0 0 0 / 28%) 0px 15px 21px 5px,
     rgb(0 0 0 / 25%) 3px 14px 25px 4px;
 }
@@ -79,6 +117,6 @@ body::-webkit-scrollbar {
 .pag {
   display: flex;
   justify-content: center;
-  margin-top: 2%;
+  margin-top: 1.5%;
 }
 </style>
