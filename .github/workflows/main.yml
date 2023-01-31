@@ -26,4 +26,12 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           source: "dist/"
           target: "interface"
-          
+      - name: Deploy
+        uses: appleboy/ssh-action@master # 使用ssh链接服务器
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          port: ${{ secrets.REMOTE_PORT }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          script: |
+            echo ${{secrets.REMOTE_PASSWD}} | sudo -S nginx -s reload
