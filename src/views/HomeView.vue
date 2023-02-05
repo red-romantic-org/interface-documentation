@@ -8,7 +8,7 @@
         v-bind:key="user.id"
         class="card"
         id="card"
-        @click="changeView()"
+        @click="changeView(user.id)"
       >
         <img slot="cover" alt="example" v-bind:src="getImage(content.imgs)" />
         <a-card-meta :title="user.title" :description="user.description">
@@ -16,7 +16,12 @@
       </a-card>
     </div>
     <div class="pag">
-      <a-pagination v-model="current" :total="50" show-less-items />
+      <a-pagination
+        v-model="current"
+        :total="content.data.length"
+        :pageSize="9"
+        show-less-items
+      />
     </div>
   </div>
 </template>
@@ -65,6 +70,36 @@ export default {
             description: 6,
             page: 1,
           },
+          {
+            id: 7,
+            title: 7,
+            description: 7,
+            page: 1,
+          },
+          {
+            id: 8,
+            title: 8,
+            description: 8,
+            page: 1,
+          },
+          {
+            id: 9,
+            title: 9,
+            description: 9,
+            page: 1,
+          },
+          // {
+          //   id: 10,
+          //   title: 10,
+          //   description: 10,
+          //   page: 2,
+          // },
+          // // {
+          // //   id: 11,
+          // //   title: 11,
+          // //   description: 11,
+          // //   page: 2,
+          // // },
         ],
         imgs: [
           "https://stq555.com/img/202203261814360.jpg",
@@ -82,10 +117,12 @@ export default {
         this.content.imgs[Math.floor(Math.random() * this.content.imgs.length)];
       return imagePath;
     },
-    changeView() {
+    changeView(cardid) {
       setTimeout(() => {
         this.$router.push("/detail");
       }, 700);
+      const cardInfo = { cardid: cardid };
+      sessionStorage.setItem("cardid", JSON.stringify(cardInfo));
     },
   },
 };
@@ -103,13 +140,15 @@ body::-webkit-scrollbar {
 .container {
   display: flex;
   justify-content: center;
-  flex-flow: row wrap;
+  flex-flow: wrap row;
   align-content: flex-start;
+  padding: 0 13%;
 }
 
 .container .card {
   margin: 1.6% 2.5%;
   text-align: center;
+  box-sizing: border-box;
   box-shadow: rgb(0 0 0 / 28%) 0px 15px 21px 5px,
     rgb(0 0 0 / 25%) 3px 14px 25px 4px;
 }
