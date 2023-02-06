@@ -12,27 +12,32 @@
           font-weight: 700;
         "
       >
-        <!--        {{ this.title }}-->
+        {{ collapsed ? "文档" : "开发文档" }}
       </div>
       <a-menu
         theme="dark"
-        :default-selected-keys="['1']"
+        :inline-collapsed="collapsed"
         mode="inline"
         v-for="item in menuList"
         v-bind:key="item.key"
+        :default-selected-keys="selectedKeys"
+        :default-open-keys="openKeys"
       >
         <a-sub-menu :key="item.key" v-if="item.children">
           <span slot="title" v-if="item.children.length !== 0"
-            ><a-icon :type="item.iconType" /><span>{{ item.name }}</span></span
+            ><a-icon :type="item.icon" /><span>{{ item.title }}</span></span
           >
-          <a-menu-item :key="item.children.key">
-            <a-icon :type="item.children.iconType"></a-icon>
-            <span>{{ item.children.name }}</span>
+          <a-menu-item
+            :key="childrenMenu.key"
+            v-for="childrenMenu in item.children"
+          >
+            <a-icon :type="childrenMenu.icon"></a-icon>
+            <span>{{ childrenMenu.title }}</span>
           </a-menu-item>
         </a-sub-menu>
         <a-menu-item v-else :key="item.key">
-          <a-icon :type="item.iconType"></a-icon>
-          <span>{{ item.name }}</span>
+          <a-icon :type="item.icon"></a-icon>
+          <span>{{ item.title }}</span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
@@ -40,11 +45,7 @@
       <a-layout-header style="background: #fff; padding: 0" />
       <a-layout-content style="margin: 0 16px">
         <a-breadcrumb style="margin: 16px 0"> </a-breadcrumb>
-        <div
-          :style="{ padding: '24px', background: '#fff', minHeight: '360px' }"
-        >
-          开发文档
-        </div>
+        <router-view></router-view>
       </a-layout-content>
       <a-layout-footer style="text-align: center">
         Interface Documentation ©2023 Created by Red Romantic
@@ -60,32 +61,34 @@ export default {
       collapsed: false,
       cardid: JSON.parse(sessionStorage.getItem("cardid")).cardid,
       title: "开发文档",
+      selectedKeys: [],
+      openKeys: [],
       menuList: [
         {
-          name: "监控系统",
           key: "1",
-          url: "www.baidu.com",
-          iconType: "laptop",
+          title: "监控系统",
+          path: "www.baidu.com",
+          icon: "laptop",
         },
         {
-          key: "sub1",
-          name: "模块接口",
-          url: null,
-          iconType: "bars",
+          key: "2",
+          title: "模块接口",
+          path: null,
+          icon: "bars",
           children: [
             {
-              name: "订单模块",
-              key: "2",
-              url: "www.baidu.com",
-              iconType: "italic",
+              key: "2.1",
+              title: "订单模块",
+              path: "www.baidu.com",
+              icon: "italic",
             },
           ],
         },
         {
-          name: "关于",
           key: "3",
-          url: "www.baidu.com",
-          iconType: "info",
+          title: "关于",
+          path: "www.baidu.com",
+          icon: "info",
         },
       ],
     };
@@ -94,6 +97,7 @@ export default {
     console.log(this.cardid);
   },
   methods: {},
+  components: {},
 };
 </script>
 
