@@ -60,6 +60,16 @@ export default {
         setTimeout(() => {
           this.$router.push("/home");
         }, 2000);
+      } else {
+        setTimeout(() => {
+          this.$notification.error({
+            message: "错误",
+            description: "请输入正确的密钥",
+          });
+        }, 1000);
+        setTimeout(() => {
+          this.resetForm("ruleForm");
+        }, 1500);
       }
     },
 

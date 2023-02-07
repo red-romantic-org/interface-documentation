@@ -8,7 +8,7 @@
           font-size: 1.2rem;
           line-height: 2rem;
           color: white;
-          font-family: 楷体;
+          font-family: 楷体, serif;
           font-weight: 700;
         "
       >
@@ -30,9 +30,14 @@
           <a-menu-item
             :key="childrenMenu.key"
             v-for="childrenMenu in item.children"
+            @click="consoleInfo(childrenMenu.key), reloadView()"
           >
-            <a-icon :type="childrenMenu.icon"></a-icon>
-            <span>{{ childrenMenu.title }}</span>
+            <span :class="childrenMenu.class" style="float: left">{{
+              childrenMenu.class
+            }}</span>
+            <span style="vertical-align: middle; display: flex">{{
+              childrenMenu.title
+            }}</span>
           </a-menu-item>
         </a-sub-menu>
         <a-menu-item v-else :key="item.key">
@@ -41,11 +46,17 @@
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
-    <a-layout>
-      <a-layout-header style="background: #fff; padding: 0" />
-      <a-layout-content style="margin: 0 16px">
-        <a-breadcrumb style="margin: 16px 0"> </a-breadcrumb>
-        <router-view></router-view>
+    <a-layout style="background-color: white">
+      <a-layout-content
+        style="
+          background-color: white;
+          margin-top: 2%;
+          margin-left: 4%;
+          padding: 8px 15px 8px 15px;
+        "
+      >
+        <a-breadcrumb> </a-breadcrumb>
+        <ContainerView></ContainerView>
       </a-layout-content>
       <a-layout-footer style="text-align: center">
         Interface Documentation ©2023 Created by Red Romantic
@@ -55,6 +66,7 @@
 </template>
 
 <script>
+import ContainerView from "@/views/ContainerView";
 export default {
   data() {
     return {
@@ -66,27 +78,59 @@ export default {
       menuList: [
         {
           key: "1",
-          title: "监控系统",
+          title: "用户",
           path: "www.baidu.com",
           icon: "laptop",
+          children: [
+            {
+              key: "1.1",
+              title: "查询用户信息",
+              path: "www.baidu.com",
+              class: "get",
+            },
+            {
+              key: "1.2",
+              title: "修改用户信息",
+              path: "www.baidu.com",
+              class: "put",
+            },
+            {
+              key: "1.3",
+              title: "登录",
+              path: "www.baidu.com",
+              class: "get",
+            },
+            {
+              key: "1.4",
+              title: "注册",
+              path: "www.baidu.com",
+              class: "post",
+            },
+            {
+              key: "1.5",
+              title: "删除用户",
+              path: "www.baidu.com",
+              class: "delete",
+            },
+          ],
         },
         {
           key: "2",
-          title: "模块接口",
+          title: "管理员",
           path: null,
           icon: "bars",
           children: [
             {
               key: "2.1",
-              title: "订单模块",
+              title: "查询管理员信息",
               path: "www.baidu.com",
-              icon: "italic",
+              class: "get",
             },
           ],
         },
         {
           key: "3",
-          title: "关于",
+          title: "商品",
           path: "www.baidu.com",
           icon: "info",
         },
@@ -96,8 +140,17 @@ export default {
   created() {
     console.log(this.cardid);
   },
-  methods: {},
-  components: {},
+  methods: {
+    consoleInfo(key) {
+      console.log(key);
+      const menuInfo = { key: key };
+      sessionStorage.setItem("key", JSON.stringify(menuInfo));
+    },
+    reloadView() {
+      window.location.reload();
+    },
+  },
+  components: { ContainerView },
 };
 </script>
 
@@ -106,5 +159,33 @@ export default {
   height: 32px;
   background: rgba(255, 255, 255, 0.2);
   margin: 16px;
+}
+.get {
+  display: block;
+  width: 38px;
+  color: #41ca9d;
+  font-size: 12px;
+  font-weight: 700;
+}
+.post {
+  display: block;
+  width: 38px;
+  color: #ed8936;
+  font-size: 12px;
+  font-weight: 700;
+}
+.put {
+  display: block;
+  width: 38px;
+  color: #1890ff;
+  font-size: 12px;
+  font-weight: 700;
+}
+.delete {
+  display: block;
+  width: 38px;
+  color: #fa541c;
+  font-size: 12px;
+  font-weight: 700;
 }
 </style>

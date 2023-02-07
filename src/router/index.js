@@ -20,6 +20,11 @@ const routes = [
     name: "detail",
     component: () => import("../views/DetailView"),
   },
+  {
+    path: "/container",
+    name: "container",
+    component: () => import("../views/ContainerView"),
+  },
 ];
 
 const router = new VueRouter({
