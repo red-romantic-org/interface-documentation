@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="contain">
     <div class="title">{{ this.title }}</div>
     <div class="detail" style="display: flex">
       <div :class="method">{{ this.method }}</div>
@@ -165,9 +165,6 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  /*display: flex;*/
-}
 .title {
   font-size: 1.7rem;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
