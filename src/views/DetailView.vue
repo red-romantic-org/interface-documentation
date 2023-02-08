@@ -20,8 +20,8 @@
         mode="inline"
         v-for="item in menuList"
         v-bind:key="item.key"
-        :default-selected-keys="selectedKeys"
-        :default-open-keys="openKeys"
+        :default-open-keys="['1']"
+        selectedKeys="selectedKeys"
       >
         <a-sub-menu :key="item.key" v-if="item.children">
           <span slot="title" v-if="item.children.length !== 0"
@@ -32,8 +32,8 @@
             v-for="childrenMenu in item.children"
             @click="consoleInfo(childrenMenu.key), reloadView()"
           >
-            <span :class="childrenMenu.class" style="float: left">{{
-              childrenMenu.class
+            <span :class="childrenMenu.method" style="float: left">{{
+              childrenMenu.method
             }}</span>
             <span style="vertical-align: middle; display: flex">{{
               childrenMenu.title
@@ -56,7 +56,7 @@
         "
       >
         <a-breadcrumb> </a-breadcrumb>
-        <ContainerView></ContainerView>
+        <ContainerView v-if="isRresh"></ContainerView>
       </a-layout-content>
       <a-layout-footer style="text-align: center">
         Interface Documentation ©2023 Created by Red Romantic
@@ -73,66 +73,64 @@ export default {
       collapsed: false,
       cardid: JSON.parse(sessionStorage.getItem("cardid")).cardid,
       title: "开发文档",
-      selectedKeys: [],
-      openKeys: [],
+      isRresh: true,
+      activeMenu: [],
       menuList: [
         {
           key: "1",
           title: "用户",
-          path: "www.baidu.com",
           icon: "laptop",
           children: [
             {
               key: "1.1",
               title: "查询用户信息",
-              path: "www.baidu.com",
-              class: "get",
+              method: "get",
             },
             {
               key: "1.2",
               title: "修改用户信息",
-              path: "www.baidu.com",
-              class: "put",
+              method: "put",
             },
             {
               key: "1.3",
               title: "登录",
-              path: "www.baidu.com",
-              class: "get",
+              method: "get",
             },
             {
               key: "1.4",
               title: "注册",
-              path: "www.baidu.com",
-              class: "post",
+              method: "post",
             },
             {
               key: "1.5",
               title: "删除用户",
-              path: "www.baidu.com",
-              class: "delete",
+              method: "delete",
             },
           ],
         },
         {
           key: "2",
           title: "管理员",
-          path: null,
           icon: "bars",
           children: [
             {
               key: "2.1",
               title: "查询管理员信息",
-              path: "www.baidu.com",
-              class: "get",
+              method: "get",
             },
           ],
         },
         {
           key: "3",
           title: "商品",
-          path: "www.baidu.com",
           icon: "info",
+          children: [
+            {
+              key: "3.1",
+              title: "查询商品信息",
+              method: "get",
+            },
+          ],
         },
       ],
     };
@@ -147,7 +145,13 @@ export default {
       sessionStorage.setItem("key", JSON.stringify(menuInfo));
     },
     reloadView() {
-      window.location.reload();
+      this.update();
+    },
+    update() {
+      this.isRresh = false;
+      this.$nextTick(() => {
+        this.isRresh = true;
+      });
     },
   },
   components: { ContainerView },
